@@ -1,0 +1,19 @@
+- @page_title = t("vinus.settings.settings")
+
+= content_for :header do
+  %h2.settings= t("vinus.settings.settings")
+
+= form_tag :url => settings_path do |f|
+
+  - Vinus.settings_groups.each do |group, fields|
+    = field_set_tag t("vinus.settings.#{group}") do
+      - fields.each do |f|
+        %dl.sided
+          %dt= settings_label f
+          %dd
+            = settings_field f
+            - if v = t("vinus.settings.help")[f]
+              %p.help= v
+
+  %p.submit.sided
+    = submit_tag t("vinus.settings.save_settings"), :class => 'button green'

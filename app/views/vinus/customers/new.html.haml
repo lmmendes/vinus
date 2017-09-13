@@ -1,0 +1,5 @@
+- @page_title = t('vinus.customers.customers')
+= content_for :header do
+  %p.buttons= link_to t('vinus.customers.back_to_customers_list'), :customers, class: 'button'
+  %h2.users= t('vinus.customers.customers')
+= render 'form'

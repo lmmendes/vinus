@@ -1,0 +1,42 @@
+- @order.vendors.each do |vendor|
+  - package = @order.packages.where(vendor: vendor).first
+  - order_items = package.order_items
+  .order_items
+    %h4 #{vendor.name}
+    .table
+      %table.data
+        %thead
+          %tr
+            %th.qty= t('vinus.orders.qty')
+            %th= t('vinus.orders.item')
+            %th= t('vinus.orders.sku')
+            %th.money= t('vinus.orders.cost')
+            %th.money= t('vinus.orders.price')
+            %th.money= Vinus.settings.tax_name
+            %th.money= t('vinus.orders.sub_total')
+        %tbody
+          - for item in order_items
+            %tr
+              %td.qty= item.quantity
+              %td.product= item.ordered_item.full_name
+              %td.sku= item.ordered_item.sku
+              %td.money= number_to_currency item.total_cost
+              %td.money= number_to_currency item.sub_total
+              %td.money= number_to_currency item.tax_amount
+              %td.money= number_to_currency item.total
+          - if @order.delivery_service
+            %td.qty
+            %td.product= link_to @order.delivery_service.name, [:edit, @order.delivery_service]
+            %td.sku
+            %td.money= number_to_currency @order.delivery_cost_price
+            %td.money= number_to_currency @order.delivery_price
+            %td.money= number_to_currency @order.delivery_tax_amount
+            %td.money= number_to_currency @order.delivery_price + @order.delivery_tax_amount
+        %tfoot
+          %tr
+            %td.qty= package.total_items
+            %td{:colspan => 2}
+            %td.money= number_to_currency package.total_cost
+            %td.money= number_to_currency package.total_before_tax
+            %td.money= number_to_currency package.tax
+            %td.money= number_to_currency package.total

@@ -1,0 +1,19 @@
+- @page_title = t('vinus.merchants.merchants')
+
+= content_for :header do
+  %p.buttons= link_to t('vinus.merchants.new'), :new_delivery_service, class: 'button green'
+  %h2.merchants= t('vinus.merchants.merchants')
+
+.table
+  %table.data
+    %thead
+      %tr
+        %th= t('vinus.merchants.name')
+    %tbody
+      - if @merchants.empty?
+        %tr.empty
+          %td{colspan: 5}= t('vinus.merchants.no_merchants')
+      - else
+        - for merchant in @merchants
+          %tr
+            %td= link_to merchant.name, [:edit, merchant]

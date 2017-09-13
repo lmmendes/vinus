@@ -1,0 +1,19 @@
+= form_for @vendor do |f|
+  = f.error_messages
+  = field_set_tag t('vinus.vendors.vendor_details') do
+    .splitContainer
+      %dl
+        %dt= f.label :name, t('vinus.vendors.name')
+        %dd= f.text_field :name, class: 'focus text', required: true
+
+    .splitContainer
+      %dl
+        %dt= f.label :description, t('vinus.vendors.description')
+        %dd= f.text_field :name, class: 'focus text', required: true
+  %p.submit
+    - unless @vendor.new_record?
+      %span.right
+        = link_to t('vinus.delete'), @vendor, class: 'button purple',
+          method: :delete, data: { confirm: t('vinus.vendors.delete_confirmation') }
+    = f.submit t('vinus.submit'), class: 'button green'
+    = link_to t('vinus.cancel'), :vendors, class: 'button'

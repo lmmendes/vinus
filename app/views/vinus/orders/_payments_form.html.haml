@@ -1,0 +1,15 @@
+= form_for [@order, Vinus::Payment.new(:amount => @order.balance)] do |f|
+  %dl.text
+    %dt= f.label :method, t('vinus.orders.method')
+    %dd= f.text_field :method, :class => 'text'
+  %dl.text
+    %dt= f.label :reference, t('vinus.orders.reference')
+    %dd= f.text_field :reference, :class => 'text'
+  %dl.amount
+    %dt= f.label :amount, t('vinus.orders.amount')
+    %dd
+      .moneyInput
+        .currency= Vinus.settings.currency_unit.html_safe
+        = f.text_field :amount, :class => 'text'
+  %dl.submit
+    %dd= f.submit t('vinus.orders.add_payment') , :class => 'button green'

@@ -1,0 +1,7 @@
+- @page_title = t('vinus.products.products')
+
+= content_for :header do
+  %p.buttons= link_to t('vinus.products.back_to_products') , :products, :class => 'button'
+  %h2.products= t('vinus.products.products')
+
+= render 'form'

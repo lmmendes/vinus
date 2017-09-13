@@ -1,0 +1,7 @@
+- @page_title = t('vinus.vendors.vendors')
+= content_for :header do
+  %p.buttons
+    = link_to t('vinus.localisations.localisations') , [@vendor, :localisations], :class => 'button'
+    = link_to t('vinus.vendors.back_to_vendors'), :vendors, :class => 'button'
+  %h2.products= t('vinus.vendors.vendors')
+= render 'form'

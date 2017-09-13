@@ -1,0 +1,27 @@
+= form_for @user do |f|
+  = f.error_messages
+  = field_set_tag t('vinus.users.user_details') do
+    .splitContainer
+      %dl.half
+        %dt= f.label :first_name, t('vinus.users.first_name')
+        %dd= f.text_field :first_name, :class => 'focus text'
+      %dl.half
+        %dt= f.label :last_name, t('vinus.users.last_name')
+        %dd= f.text_field :last_name, :class => 'text'
+  = field_set_tag t("vinus.users.login") do
+    .splitContainer
+      %dl.third
+        %dt= f.label :email_address, t('vinus.users.email')
+        %dd= f.text_field :email_address, :class => 'text'
+      %dl.third
+        %dt= f.label :password, t('vinus.users.password')
+        %dd= f.password_field :password, :class => 'text'
+      %dl.third
+        %dt= f.label :password_confirmation, t('vinus.users.password_confirmation')
+        %dd= f.password_field :password_confirmation, :class => 'text'
+
+  %p.submit
+    - unless @user.new_record?
+      %span.right= link_to t('vinus.delete'), @user, :class => 'button purple', :method => :delete, :data => {:confirm => t('vinus.users.delete_confirmation')}
+    = f.submit  t('vinus.submit'), :class => 'button green'
+    = link_to t('vinus.cancel'), :users, :class => 'button'

@@ -1,0 +1,29 @@
+- @page_title = "#{t('vinus.localisations.localisations')} - #{@vendor.name}"
+= content_for :header do
+  %p.buttons= link_to t('vinus.localisations.back_to_localisations'), [@vendor, :localisations], :class => 'button'
+  %h2.products= t('vinus.localisations.localisations_of', name: @vendor.name)
+
+- loc = @localisation.new_record? ? :en : @localisation.locale.to_sym
+- Globalize.with_locale(loc) do
+  = form_for [@vendor, @localisation], :url => @localisation.new_record? ? vendor_localisations_path(@vendor) : vendor_localisation_path(@vendor, @localisation), :html => {:multipart => true} do |f|
+    = f.error_messages
+
+    = field_set_tag t('vinus.vendor.category_details') do
+      .splitContainer
+        %dl.half
+          %dt= f.label :name, t('vinus.vendor.name')
+          %dd= f.text_field :name, :class => 'focus text'
+        %dl.half
+          %dt= f.label :locale
+          %dd= f.select :locale, I18n.available_locales, {selected: @localisation.locale || params[:locale_field]}, {class: "chosen"}
+      %dl
+        %dt= f.label :permalink, t('vinus.vendor.permalink')
+        %dd= f.text_field :permalink, :class => 'text'
+      %dl.cleared
+        %dt= f.label :description, t('vinus.vendor.description')
+        %dd= f.text_area :description, :class => 'text'
+
+    %p.submit
+      - unless @localisation.new_record?
+        %span.right= link_to t('vinus.delete'), vendor_localisation_path(@vendor, @localisation), :class => 'button purple', :method => :delete, :data => {:confirm => t('vinus.localisations.delete_confirmation')}
+      = f.submit t('vinus.localisations.save_localisation'), :class => 'button green'

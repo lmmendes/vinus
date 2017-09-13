@@ -1,0 +1,28 @@
+- @page_title = t('vinus.vendors.vendors')
+
+= content_for :header do
+  %p.buttons=link_to t('vinus.vendors.new_category'), :new_vendor, :class => 'button green'
+  %h2.products= t('vinus.vendors.vendors')
+
+.table
+  %table.data
+    %thead
+      %tr
+        %th= t('vinus.vendors.name')
+        - unless @vendors.empty?
+          - I18n.available_locales.each do |i|
+            %th
+    %tbody
+      - if @vendors.empty?
+        %tr.empty
+          %td= t('vinus.vendors.no_categories')
+      - else
+        - for vendor in @vendors
+          %tr
+            %td
+              = link_to vendor.name, [:edit, vendor]
+            - I18n.available_locales.each do |i|
+              - if (translations = vendor.translations.where(locale: i)).count >= 1
+                %td= link_to i, edit_vendor_localisation_path(vendor, translations.first.id)
+              - else
+                %td= link_to i, new_vendor_localisation_path(vendor, locale_field: i)
