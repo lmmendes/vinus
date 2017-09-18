@@ -157,7 +157,23 @@ class CreateVinusInitialSchema < ActiveRecord::Migration
       t.text     'country_ids'
     end
 
+    create_table 'vinus_merchants' do |t|
+      t.integer 'id'
+      t.string 'name'
+      t.string 'address1'
+      t.string 'address2'
+      t.string 'address3'
+      t.string 'address4'
+      t.string 'postcode'
+      t.integer 'country_id'
+      t.decimal 'commision', precision: 8, scale: 2, default: 0.0
+      t.decimal  'weight', precision: 8, scale: 3, default: 0.0
+      t.datetime 'created_at'
+      t.datetime 'updated_at'
+    end
+
     create_table 'vinus_users' do |t|
+      t.integer 'merchant_id'
       t.string   'first_name'
       t.string   'last_name'
       t.string   'email_address'
@@ -168,7 +184,11 @@ class CreateVinusInitialSchema < ActiveRecord::Migration
   end
 
   def down
-    [:users, :tax_rates, :stock_level_adjustments, :settings, :products, :product_categories, :product_attributes, :orders, :order_items, :delivery_services, :delivery_service_prices, :countries].each do |table|
+    [
+      :users, :tax_rates, :stock_level_adjustments, :settings, :products,
+      :product_categories, :product_attributes, :orders, :order_items,
+      :delivery_services, :delivery_service_prices, :countries
+    ].each do |table|
       drop_table "vinus_#{table}"
     end
   end

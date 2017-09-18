@@ -2,6 +2,8 @@ module Vinus
   class User < ActiveRecord::Base
     self.table_name = 'vinus_users'
 
+    belongs_to :merchant
+
     has_secure_password
 
     # Validations
